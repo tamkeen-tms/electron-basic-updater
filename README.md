@@ -16,7 +16,10 @@ Well, right now I am working on an Electron application for me and my collegues 
 * You can use EBU when you are still building the application and have a group of people live-testing it on their machines, with you monitoring the process and pushing changes.
 * Also if your application is a local thing, inside your company or work group, and you simply need to push "changes" to their copies.
 * If you don't know how to get the [Squirrel](https://github.com/Squirrel) thing to work and need to roll out your application asap.
+
+
 ---
+
 ## Installation
 ```
     $ npm install --save electron-basic-updater
