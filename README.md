@@ -1,11 +1,11 @@
 # What it is
-> An NodeJs for Electron, that handles the application updates, in the most basic way.
+> A NodeJs module for Electron, that handles the application updates, in the most basic way.
 
 ## How it works (Read this first)
 * EBU (Electron Basic Updater) was built to handle the process of updating an Electron app in the most basic way; **it simply replaces the application files (at /resources/app/) with the new ones representing the "update"!** 
-    > If this is what you are looking for then hope you like it, else please check out a more advanced tool to handle this, somthing like [electron-updater](https://www.npmjs.com/package/electron-updater). Or have a look at [this](http://electron.atom.io/docs/v0.33.0/api/auto-updater/).
-* The check for "updates" must by triggered by the application. **EBU doesn't make any kind of periodic checks on its own**. I suggest you use something like [node-schedule](https://www.npmjs.com/package/node-schedule) for this task.
-* EBU talks to an API (let's call it so) to tell it if there is an update pending installation.
+    > If this is what you are looking for then I hope you like it, else please check out a more advanced tool to handle this, somthing like [electron-updater](https://www.npmjs.com/package/electron-updater). Or have a look at [this](http://electron.atom.io/docs/v0.33.0/api/auto-updater/).
+* The check for "updates" must by triggered by the application. **EBU doesn't make any kind of periodic checks on its own**. You can use  something like [node-schedule](https://www.npmjs.com/package/node-schedule) for this task.
+* EBU talks to an API (let's call it so) to tell it if there is a new update.
     * The API recieves a request from EBU with the client's **current version of the application (must be specified inside the application package.json file)**.
     * The API then responds with the new update, ... or simply *false* to abort.
     * If there's an update available the API should respond with the *source* for this update **.zip** file.
@@ -13,7 +13,7 @@
 
 ## But why ? (use cases)
 Well, right now I am working on an Electron application for me and my collegues to use at work, after finishing the application and giving them the .exe release I needed to change couple of things, so I asked myself: what to do now ?! I read [this](http://electron.atom.io/docs/v0.33.0/api/auto-updater/) but for the life of me I couldn't get it to work :( (but to be fair, I didn't give it enough time, I wanted to create this instead :) ). So I decided to create a module to handle this, in the most basic way possible. So ...
-* You can use EBU when you are still building the application and need a group of people to live-test it on their machines with you monitoring the process and pushing changes.
+* You can use EBU when you are still building the application and have a group of people live-testing it on their machines, with you monitoring the process and pushing changes.
 * Also if your application is a local thing, inside your company or work group, and you simply need to push "changes" to their copies.
 * If you don't know how to get the [Squirrel](https://github.com/Squirrel) thing to work and need to roll out your application asap.
 ---
