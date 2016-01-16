@@ -3,7 +3,7 @@
 
 ## How it works (Read this first)
 * EBU (Electron Basic Updater) was built to handle the process of updating an Electron app in the most basic way; **it simply replaces the application files (at /resources/app/) with the new ones representing the "update"!** 
-    > If this is what you are looking for then I hope you like it, else please check out a more advanced tool to handle this, somthing like [electron-updater](https://www.npmjs.com/package/electron-updater). Or have a look at [this](http://electron.atom.io/docs/v0.33.0/api/auto-updater/).
+    f this is what you are looking for then I hope you like it, else please check out a more advanced tool to handle this, somthing like [electron-updater](https://www.npmjs.com/package/electron-updater). Or have a look at [this](http://electron.atom.io/docs/v0.33.0/api/auto-updater/).
 * The check for "updates" must by triggered by the application. **EBU doesn't make any kind of periodic checks on its own**. You can use  something like [node-schedule](https://www.npmjs.com/package/node-schedule) for this task.
 * EBU talks to an API (let's call it so) to tell it if there is a new update.
     * The API recieves a request from EBU with the client's **current version of the application (must be specified inside the application package.json file)**.
@@ -57,9 +57,13 @@ Will check for an update, if an update was found, will download it and install i
 And I mean this in the most simple way possible. This server/API will recieve one request, which is the check for updates, and will send one response of :
 * **New update:** `{"last": " [the new version] ", "source": " [the .zip file url] "}` **EBU wont make any version comparsions, it will simply download the `source` url and extract it**. So, you will need to handle this on your side, EBU sends (POST-type request) you the client's current version (as `current`), you can use this to send the correct update!
 * **Any other value, to cancel the update**
+
 ---
+
 * Please contact me with any comments or open an issue.
 * The development of this module will be continued.
+
 ---
+
 The MIT License (MIT) - 
 Copyright (c) 2015 Ahmed Zain tamkeenlms@gmail.com
