@@ -43,7 +43,7 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
 
 # API
 
-## `Init( setup )`
+### `Init( setup )`
 
 * **setup** (object) The module setup
     * **api** (string) The URL EBU will call to check for updates.
@@ -56,13 +56,13 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
             });    
         ```
 
-## `check()`
+### `check()`
 
 Will check for an update, if an update was found, will download it and install it! As mentioned, this method must be tirggerd, EBU wont check for updates on its own.
 
 ---
 
-# The update server
+## The update server
 And I mean this in the most simple way possible. This server/API will recieve one request, which is the check for updates, and will send one response of :
 
 * **New update:** `{"last": " [the new version] ", "source": " [the .zip file url] "}` **EBU wont make any version comparsions, it will simply download the `source` url and extract it**. So, you will need to handle this on your side, EBU sends (POST-type request) you the client's current version (as `current`), you can use this to send the correct update!
