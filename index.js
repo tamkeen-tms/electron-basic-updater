@@ -5,15 +5,12 @@
      *
      * ~ Zain
      * */
-
-    const Electron = require('electron');
-    const Application = Electron.app;
+    const Application = require('app');
     const FileSystem = require('fs');
     const Utils = require('util');
     const Zip = require('adm-zip');
     const HTTP = require('restler');
-    const Path = require('path');
-    const AppPath = Application.getAppPath() + Path.sep;
+    const AppPath = Application.getAppPath() + '/';
 
     /**
      * */
@@ -52,7 +49,7 @@
 
             // Put it into a file
             if(this.setup.logFile){
-                FileSystem.appendFileSync(this.setup.logFile, line + "\n");
+                FileSystem.appendFileSync(AppPath + this.setup.logFile, line + "\n");
             }
         },
 

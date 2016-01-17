@@ -1,10 +1,14 @@
 {
   "name": "electron-basic-updater",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Handles Electron application updates, IN THE MOST BASIC WAY.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azain/electron-basic-updater"
   },
   "keywords": [
     "electron",
