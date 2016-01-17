@@ -43,7 +43,20 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
 ```
     <script>
         var remote = require('remote'),
-            EBU = 
+            app = remote.require('app'),
+            EBU = remote.require('electron-basic-updater');
+            
+        function(){
+            EBU.check(function(error){
+                if(error){
+                    alert(error);
+                    return false;
+                }
+                
+                alert('App updated successfully! Restart it please.');
+                app.quit();
+            });
+        }
     </script>
 ```
 
@@ -64,10 +77,18 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
                 'requestOptions': {'accessToken': ..., 'data': {'group': 'friends'}}
             });    
         ```
+    * **callback** (function) [optional] The callback that will be trigger at the end of the process, whether the update was a success or not. You can set the callback here, or you can pass it directly to `check( ... )`, I use the later option, to be able to `console.log()` the error in the DevTools.
+    
+    ```
+        EBU.init({
+            'callback': function(error){ ... }
+        });
+    ```
 
 ### `check( callback )`
 
 Will check for an update, if an update was found, will download it and install it! As mentioned, this method must be tirggerd, EBU wont check for updates on its own.
+* **callback** The update result callback
 
 ---
 
@@ -76,6 +97,17 @@ And I mean this in the most simple way possible. This server/API will recieve on
 
 * **New update:** `{"last": " [the new version] ", "source": " [the .zip file url] "}` **EBU wont make any version comparsions, it will simply download the `source` url and extract it**. So, you will need to handle this on your side, EBU sends (POST-type request) you the client's current version (as `current`), you can use this to send the correct update!
 * **Any other value, to cancel the update**
+
+My current *update server* (for the app I descriped above) is simple:
+```
+    <?php
+        print json_encode([
+            'last' => '1.0.1',
+            'source' => 'http:// ... /update.zip'
+        ]);
+```
+
+I change this manually and tell the guys to hit the "update" button, which will trigger `.check()`
 
 ---
 
