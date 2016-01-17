@@ -12,6 +12,16 @@
     const HTTP = require('restler');
     const AppPath = Application.getAppPath() + '/';
 
+    const errors = [
+        'version_not_specified',
+        'cannot_connect_to_api',
+        'no_update_available',
+        'api_response_not_valid',
+        'update_file_not_found',
+        'failed_to_download_update',
+        'failed_to_apply_update'
+    ];
+
     /**
      * */
     var Updater = {
@@ -21,22 +31,23 @@
         'setup': {
             'api': null,
             'logFile': 'updater-log.txt',
-            'requestOptions': {}
+            'requestOptions': {},
+            'callback': false
         },
 
         /**
          * The new update information
          * */
-        'update': {'last': null, 'source': null, 'file': null},
+        'update': {
+            'last': null,
+            'source': null,
+            'file': null
+        },
 
         /**
          * Init the module
          * */
         'init': function(setup){
-            if(!Utils.isObject(setup)){
-                this.log('Invalid setup!');
-            }
-
             this.setup = Utils._extend(this.setup, setup);
         },
 
@@ -45,7 +56,7 @@
          * */
         'log': function(line){
             // Log it
-            Utils.log('Updater: ', line);
+            console.log('Updater: ', line);
 
             // Put it into a file
             if(this.setup.logFile){
@@ -54,15 +65,31 @@
         },
 
         /**
+         * Triggers the callback you set to receive the result of the update
+         * */
+        'end': function(error){
+            if(typeof this.setup.callback != 'function') return false;
+            this.setup.callback.call(this,
+                ( error != 'undefined' ?errors[error] :false ),
+                this.update.last);
+        },
+
+        /**
          * Make the check for the update
          * */
-        'check': function(){
+        'check': function(callback){
+            if(callback){
+                this.setup.callback = callback;
+            }
+
             // Get the current version
             var packageInfo = require(AppPath + '/package.json');
 
             // If the version property not specified
             if(!packageInfo.version){
-                this.log('The "version" property not defined inside the application package.json');
+                this.log('The "version" property not specified inside the application package.json');
+                this.end(0);
+
                 return false;
             }
 
@@ -80,6 +107,7 @@
                     // If the request failed
                     if(result instanceof Error){
                         Updater.log('Could not connect, ' + result.message);
+                        Updater.end(1);
                         return false;
                     }
 
@@ -112,12 +140,15 @@
 
                         }else{
                             Updater.log('No updates available');
+                            Updater.end(2);
+
                             return false;
                         }
 
 
                     }catch(error){
                         Updater.log('API response is not valid');
+                        Updater.end(3);
                     }
                 });
         },
@@ -140,6 +171,7 @@
                     // The request failed
                     if(data instanceof Error){
                         Updater.log('Could not find the update file.');
+                        Updater.end(4);
                         return false;
                     }
 
@@ -150,6 +182,7 @@
                     FileSystem.writeFile(updateFile, data, null, function(error){
                         if(error){
                             Updater.log('Failed to download the update to a local file.');
+                            Updater.end(5);
                             return false;
                         }
 
@@ -178,8 +211,14 @@
                 this.log('New update files were extracted.');
                 this.log('End of update.');
 
+                // Success
+                this.end();
+
             }catch(error){
                 this.log('Extraction error: ' + error);
+
+                // Failure
+                this.end(6);
             }
         }
     };
