@@ -90,7 +90,7 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
 ### `check( callback )`
 
 Will check for an update, if an update was found, will download it and install it! As mentioned, this method must be tirggerd, EBU wont check for updates on its own.
-* **callback** The update result callback. Check the installation section above for more details/
+* **callback** The update result callback. Check the installation section above for more details.
 
 ---
 
