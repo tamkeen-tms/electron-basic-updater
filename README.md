@@ -37,7 +37,15 @@ Now, inside the *main.js* file, call it like this:
         });
     });
 ```
-That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU will first check for updates, if there was a new update, EBU will download it and extract it to the application folder.
+
+That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU will first check for updates, if there was a new update, EBU will download it and extract it to the application folder. Inside a window you can use it like this:
+
+```
+    <script>
+        var remote = require('remote'),
+            EBU = 
+    </script>
+```
 
 ---
 
@@ -49,6 +57,7 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
     * **api** (string) The URL EBU will call to check for updates.
     * **logFile** (string) [optional] The file to log the update process updates and errors to it, pass *FALSE* to omit logging . Defaults to "updater-log.txt".
     * **requestOptions** (object) [optional] The global options for the HTTP requests EBU will make to check for updates and download them. EBU uses the cool [restler](https://github.com/danwrong/restler) for these requests, and the `requestOptions` will be used for all the requests ([the full options list](https://github.com/danwrong/restler#options)). You can use this option to pass an `accessToken` or a `username` and `password` along with the request, or even send some extra data along with the request through the `data` property.
+    
         ```
             EBU.init({
                 'api': 'http:// ...',
@@ -56,7 +65,7 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
             });    
         ```
 
-### `check()`
+### `check( callback )`
 
 Will check for an update, if an update was found, will download it and install it! As mentioned, this method must be tirggerd, EBU wont check for updates on its own.
 
