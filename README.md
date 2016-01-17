@@ -46,7 +46,7 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
             app = remote.require('app'),
             EBU = remote.require('electron-basic-updater');
             
-        function(){
+        function update(){
             EBU.check(function(error){
                 if(error){
                     alert(error);
@@ -58,6 +58,8 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
             });
         }
     </script>
+    
+    <a href="#" onclick="update()"> Update! </a>
 ```
 
 ---
@@ -88,7 +90,7 @@ That's it. Now, you can use ```EBU.check()``` to trigger the update process; EBU
 ### `check( callback )`
 
 Will check for an update, if an update was found, will download it and install it! As mentioned, this method must be tirggerd, EBU wont check for updates on its own.
-* **callback** The update result callback
+* **callback** The update result callback. Check the installation section above for more details/
 
 ---
 
@@ -98,7 +100,7 @@ And I mean this in the most simple way possible. This server/API will recieve on
 * **New update:** `{"last": " [the new version] ", "source": " [the .zip file url] "}` **EBU wont make any version comparsions, it will simply download the `source` url and extract it**. So, you will need to handle this on your side, EBU sends (POST-type request) you the client's current version (as `current`), you can use this to send the correct update!
 * **Any other value, to cancel the update**
 
-My current *update server* (for the app I descriped above) is simple:
+My current *update server* (for the app I descriped above) is:
 ```
     <?php
         print json_encode([
