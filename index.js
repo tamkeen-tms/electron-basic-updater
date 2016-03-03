@@ -69,6 +69,7 @@
          * */
         'end': function(error){
             if(typeof this.setup.callback != 'function') return false;
+
             this.setup.callback.call(this,
                 ( error != 'undefined' ?errors[error] :false ),
                 this.update.last);
@@ -206,7 +207,7 @@
                 this.log('Extracting the new update files.');
 
                 var zip = new Zip(this.update.file);
-                zip.extractAllTo(AppPath);
+                zip.extractAllTo(AppPath, true);
 
                 this.log('New update files were extracted.');
                 this.log('End of update.');
