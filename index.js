@@ -122,7 +122,7 @@
                         }
 
                         // Parse the response
-                        var response = JSON.parse(result);
+                        var response = typeof result === 'object' ? result : JSON.parse(result);
 
                         // If the "last" property is not defined
                         if(!response.last){
