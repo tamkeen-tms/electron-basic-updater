@@ -5,7 +5,7 @@
      *
      * ~ Zain
      * */
-    const Application = require('app');
+    const Application = require('electron').app;
     const FileSystem = require('fs');
     const Utils = require('util');
     const Zip = require('adm-zip');
@@ -84,7 +84,7 @@
             }
 
             // Get the current version
-            var packageInfo = require(AppPath + '/package.json');
+            var packageInfo = require(AppPath + 'package.json');
 
             // If the version property not specified
             if(!packageInfo.version){
@@ -122,7 +122,7 @@
                         }
 
                         // Parse the response
-                        var response = JSON.parse(result);
+                        var response = typeof result === 'object' ? result : JSON.parse(result);
 
                         // If the "last" property is not defined
                         if(!response.last){
